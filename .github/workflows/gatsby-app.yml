@@ -32,14 +32,28 @@ jobs:
     - name: Verify the Build Sucessfull
       run: ls -la public
     
-    - name: setup SSH
-      run: | 
-       mkdir -p ~/.ssh
-       echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/deploy_key
-       sudo chmod 600 ~/.ssh/deploy_key
-       ssh-keyscan -H "${{secrets.host}}" > ~/.ssh/known_hosts
+    # - name: Setup SSH
+    #   run: | 
+    #    mkdir -p ~/.ssh
+    #    echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/deploy_key
+    #    sudo chmod 600 ~/.ssh/deploy_key
+    #    ssh-keyscan -H "${{secrets.host}}" > ~/.ssh/known_hosts
 
-    - name: Copy the build to the server
-      run: |
-        rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}:/home/${{secrets.user}}/gatsbay-app"
+    # - name: Copy the build to the server
+    #   run: |
+    #     rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}:/home/${{secrets.user}}/gatsbay-app"
 
+    - name: Use mdallasanta action
+      uses: mdallasanta/ssh-scp-deploy@1.2.0
+          with:
+            local: '/public'                                                  # Local file path - REQUIRED false - DEFAULT ./
+            remote: '/home/${{secrets.user}}/gatsbay-app"'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
+            host: ${{secrets.HOST}}                                      # Remote server address - REQUIRED true
+            port: ${{secrets.PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
+            user: ${{secrets.USER}}                                      # Remote server user - REQUIRED true
+            password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key" 
+            key: ${{secrets.SSH_PRIVATE_KEY}}                                        # Remote server private key - REQUIRED at least one of "password" or "key" 
+            pre_upload: echo "This will be executed before the upload!"  # Command to run via ssh before scp upload - REQUIRED false
+            post_upload: echo "This will be executed after the upload!"  # Command to run via ssh after scp upload - REQUIRED false
+            ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+            scp_options: -v
