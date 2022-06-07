@@ -41,5 +41,5 @@ jobs:
 
     - name: Copy the build to the server
       run: |
-        rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}://homel${{secrets.user}}/gatsbay-app"
+        rsync -avz -e "ssh -i ~/.ssh/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}:/homel${{secrets.user}}/gatsbay-app"
 
