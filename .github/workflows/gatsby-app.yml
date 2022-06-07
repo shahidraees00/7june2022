@@ -31,4 +31,15 @@ jobs:
 
     - name: Verify the Build Sucessfull
       run: ls -la public
+    
+    - name: setup SSH
+       run: |
+       mkdir -p ~/.ssh
+       echo "${{secrets.ssh_private_key}}" > ~/.ssh/deplo_key
+       sudo chmod 600 ~/ssh/deploy_key
+       ssh-keyscan -H "${{secrets.host}}" > ~/ssh/known_hosts
+
+    - name: Copy the build to the server
+       run: |
+        rsync -avz -e "ssh -i ~/deploy_key" public/ "${{secrets.user}}@${{secrets.host}}://homel${{secrets.user}}/gatsbay.app"
 
