@@ -49,9 +49,9 @@ jobs:
         local: './public'                                                  # Local file path - REQUIRED false - DEFAULT ./
         remote: '/home/${{secrets.user}}/gatsbay-app'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
         host: ${{secrets.HOST}}                                      # Remote server address - REQUIRED true
-        port: ${{secrets.PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
+        #port: ${{secrets.PORT}}                                      # Remote server port - REQUIRED false - DEFAULT 22
         user: ${{secrets.USER}}                                      # Remote server user - REQUIRED true
-        password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key" 
+        #password: ${{secrets.PASSWORD}}                              # User password - REQUIRED at least one of "password" or "key" 
         key: ${{secrets.SSH_PRIVATE_KEY}}                                        # Remote server private key - REQUIRED at least one of "password" or "key" 
         pre_upload: 'rm /home/${{secrets.user}}/gatsbay-app'  # Command to run via ssh before scp upload - REQUIRED false
         post_upload: 'sudo cp -r gatsbay-app/ * /var/www/html/'  # Command to run via ssh after scp upload - REQUIRED false
