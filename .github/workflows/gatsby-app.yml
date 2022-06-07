@@ -16,7 +16,7 @@ jobs:
 
     - name: Install Node.js
       uses: action/setup-node@v3
-        with:
+      with:
         node-version: "18.3.0"
         cache: npm
 
