@@ -55,5 +55,5 @@ jobs:
         key: ${{secrets.SSH_PRIVATE_KEY}}                                        # Remote server private key - REQUIRED at least one of "password" or "key" 
         pre_upload: 'rm /home/${{secrets.user}}/gatsbay-app'  # Command to run via ssh before scp upload - REQUIRED false
         post_upload: 'sudo cp -r gatsbay-app/ * /var/www/html/'  # Command to run via ssh after scp upload - REQUIRED false
-        ssh_options: -o StrictHostKeyChecking=yes                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+        ssh_options: -o StrictHostKeyChecking=no                     # A set of ssh_option separated by -o - REQUIRED false - DEFAULT -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
         scp_options: -v
