@@ -8,10 +8,27 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-deploy:
+    name: build and deploy Gatby Application 
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: check out code
+      uses: actions/checkout@v3
+
+    - name: Install Node.js
+      uses: action/stup-node@v3
+        with:
+        node-version: "18.3.0"
+        cache: npm
+
+    - name: Install Dependencies 
+      run: npm ci
+
+    - name: Install gatsby
+      run: npm install -g gatsby-cli
+    
+    - name: build Gatsby Application
+      run: gatsby build
+
+    - name: Verify the Build Sucessfull
+      run: ls -la public
+
