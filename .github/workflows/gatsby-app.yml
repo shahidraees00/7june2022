@@ -35,7 +35,7 @@ jobs:
     - name: setup SSH
       run: | 
        mkdir -p ~/.ssh
-       echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/deplo_key
+       echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/deploy_key
        sudo chmod 600 ~/.ssh/deploy_key
        ssh-keyscan -H "${{secrets.host}}" > ~/.ssh/known_hosts
 
